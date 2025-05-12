@@ -4,6 +4,8 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { supabase } from '../services/supabase';
 import logo from '../assets/images/logo.png';
 import '../styles/pages/Home.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeartbeat, faBook, faTools, faLeaf, faBullhorn, faCircle, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 
 // Tipos para as ocorrências
 interface Ocorrencia {
@@ -141,18 +143,16 @@ export default function Home() {
   // Lista de ícones para os diferentes setores
   const getIconeSetor = (setor: string) => {
     switch (setor) {
-      case 'Secretaria da Saúde':
-        return <span className="icone-setor saude"></span>;
-      case 'Secretaria da Educação':
-        return <span className="icone-setor educacao"></span>;
-      case 'Secretaria de Obras':
-        return <span className="icone-setor obras"></span>;
-      case 'Secretaria do Meio Ambiente':
-        return <span className="icone-setor meio-ambiente"></span>;
-      case 'Secretaria de Comunicação Social':
-        return <span className="icone-setor comunicacao"></span>;
+      case 'Educação':
+        return <FontAwesomeIcon icon={faBook} className="icone-setor educacao" />;
+      case 'Infraestrutura':
+        return <FontAwesomeIcon icon={faTools} className="icone-setor infraestrutura" />;
+      case 'Iluminação Pública':
+        return <FontAwesomeIcon icon={faLightbulb} className="icone-setor iluminacao-publica" />;
+      case 'Meio Ambiente':
+        return <FontAwesomeIcon icon={faLeaf} className="icone-setor meio-ambiente" />;
       default:
-        return <span className="icone-setor padrao"></span>;
+        return <FontAwesomeIcon icon={faCircle} className="icone-setor padrao" style={{ color: '#ccc' }} />;
     }
   };
 
