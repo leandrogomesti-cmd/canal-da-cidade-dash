@@ -15,11 +15,28 @@ export default function Login() {
     e.preventDefault()
     setError('')
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data: authData, error } = await supabase.auth.signInWithPassword({ 
+      email, 
+      password 
+    })
 
     if (error) {
       setError('Email ou senha incorretos.')
     } else {
+      // Buscar dados adicionais do usuário
+      const { data: userData, error: userError } = await supabase
+        .from('usuarios')
+        .select('*')
+        .eq('id', authData.user?.id)
+        .single()
+
+      if (userError) {
+        setError('Erro ao carregar dados do usuário')
+        return
+      }
+
+      // Guardar dados do usuário
+      localStorage.setItem('userData', JSON.stringify(userData))
       navigate('/home')
     }
   }

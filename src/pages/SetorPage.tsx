@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../services/supabase';
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/pages/SetorPage.css';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
@@ -13,56 +14,121 @@ interface Ocorrencia {
 }
 
 export default function SetorPage() {
-  const { nome } = useParams<{ nome: string }>();
+  const { id } = useParams(); // Mudando de nome para id
   const [ocorrencias, setOcorrencias] = useState<Ocorrencia[]>([]);
   const [selectedOcorrencia, setSelectedOcorrencia] = useState<Ocorrencia | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [replicaTexto, setReplicaTexto] = useState<string>('');
 
   useEffect(() => {
-    console.log('Setor selecionado:', nome);
-
     const fetchOcorrencias = async () => {
-      const { data, error } = await supabase
-        .from('ocorrencias')
-        .select('id, titulo, descricao, status, endereco, created_at, setor, vereador_nome, foto_url')
-        .eq('setor', nome);
+      console.log('Buscando ocorrências para setor:', id);
+      
+      // Busca o usuário atual com auth.uid()
+      const { data: userData, error: userError } = await supabase
+        .from('usuarios')
+        .select('acesso, vereador_id') // Adicionado vereador_id aqui
+        .eq('id', (await supabase.auth.getUser()).data.user?.id)
+        .single();
 
+      console.log('Dados do usuário:', userData);
+
+      if (userError) {
+        console.error('Erro ao buscar usuário:', userError);
+        return;
+      }
+
+      // Query base
+      let query = supabase
+        .from('ocorrencias')
+        .select('*')
+        .eq('setor', id);
+
+      // Aplica filtro por vereador_id apenas se não for admin
+      if (userData?.acesso !== 'admin') {
+        query = query.eq('vereador_id', userData?.vereador_id);
+      }
+
+      const { data, error } = await query;
+
+      console.log('Ocorrências encontradas:', data);
+      
       if (error) {
         console.error('Erro ao buscar ocorrências:', error);
         return;
       }
 
-      console.log('Ocorrências retornadas:', data);
       setOcorrencias(data || []);
     };
 
     fetchOcorrencias();
-  }, [nome]);
+
+    // Atualiza o channel para usar id ao invés de nome
+    const channel = supabase
+      .channel('ocorrencias-insert')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'ocorrencias' },
+        (payload) => {
+          const novaOcorrencia = payload.new as Ocorrencia;
+          if (novaOcorrencia.setor === id) {
+            setOcorrencias((prev) => [...prev, novaOcorrencia]);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [id]); // Mudando dependência para id
 
   const handleDragEnd = async (result: any) => {
     if (!result.destination) return;
 
     const { source, destination } = result;
 
+    // Só faz algo se mudou de coluna
     if (source.droppableId !== destination.droppableId) {
-      const updatedOcorrencias = [...ocorrencias];
-      const [movedItem] = updatedOcorrencias.splice(source.index, 1);
-      movedItem.status = destination.droppableId;
-      updatedOcorrencias.splice(destination.index, 0, movedItem);
+      const ocorrenciaFiltrada = ocorrencias
+        .filter((o) => o.status === source.droppableId)[source.index];
+      const novoStatus = destination.droppableId;
 
-      setOcorrencias(updatedOcorrencias);
-
-      // Atualizar o status no Supabase
-      await supabase
+      // Atualiza no banco primeiro
+      const { error } = await supabase
         .from('ocorrencias')
-        .update({ status: destination.droppableId })
-        .eq('id', movedItem.id);
+        .update({ status: novoStatus })
+        .eq('id', ocorrenciaFiltrada.id);
+
+      if (!error) {
+        // Busca o usuário atual com auth.uid()
+        const { data: userData } = await supabase
+          .from('usuarios')
+          .select('acesso, vereador_id')
+          .eq('id', (await supabase.auth.getUser()).data.user?.id)
+          .single();
+
+        // Query base
+        let query = supabase
+          .from('ocorrencias')
+          .select('*')
+          .eq('setor', id);
+
+        // Aplica filtro por vereador_id apenas se não for admin
+        if (userData?.acesso !== 'admin') {
+          query = query.eq('vereador_id', userData?.vereador_id);
+        }
+
+        const { data } = await query;
+        setOcorrencias(data || []);
+      }
     }
   };
 
   const openModal = (ocorrencia: Ocorrencia) => {
     setSelectedOcorrencia(ocorrencia);
+    setReplicaTexto(ocorrencia.replica || '');
     setIsModalOpen(true);
   };
 
@@ -77,10 +143,10 @@ export default function SetorPage() {
 
   return (
     <div className="setor-page-container">
-      <h1>Ocorrências do Setor: {nome}</h1>
+      <h1>Ocorrências do Setor: {id}</h1>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="trello-board">
-          {['Recebida', 'Em análise', 'Finalizada'].map((status) => (
+          {['Enviado', 'Recebida', 'Em análise', 'Finalizada'].map((status) => (
             <Droppable key={status} droppableId={status}>
               {(provided) => (
                 <div
@@ -90,14 +156,7 @@ export default function SetorPage() {
                 >
                   <h2>{status}</h2>
                   {ocorrencias
-                    .filter((ocorrencia) => {
-                      const match = ocorrencia.status === status;
-                      console.log(
-                        `Ocorrência filtrada para status ${status}:`,
-                        match ? ocorrencia : 'Nenhuma'
-                      );
-                      return match;
-                    })
+                    .filter((ocorrencia) => ocorrencia.status === status)
                     .map((ocorrencia, index) => (
                       <Draggable
                         key={ocorrencia.id}
@@ -148,6 +207,40 @@ export default function SetorPage() {
           ))}
         </div>
       </DragDropContext>
+      {isModalOpen && selectedOcorrencia && (
+        <div className="modal">
+          <h2>Detalhes da Ocorrência</h2>
+          <p><strong>Título:</strong> {selectedOcorrencia.titulo}</p>
+          <p><strong>Descrição:</strong> {selectedOcorrencia.descricao}</p>
+          <label>
+            Réplica:
+            <textarea
+              value={replicaTexto}
+              onChange={e => setReplicaTexto(e.target.value)}
+              rows={4}
+              style={{ width: '100%' }}
+            />
+          </label>
+          <button onClick={async () => {
+            // Atualiza no banco
+            await supabase
+              .from('ocorrencias')
+              .update({ replica: replicaTexto })
+              .eq('id', selectedOcorrencia.id);
+
+            // Atualiza localmente (opcional)
+            setOcorrencias(prev =>
+              prev.map(o =>
+                o.id === selectedOcorrencia.id ? { ...o, replica: replicaTexto } : o
+              )
+            );
+            setIsModalOpen(false);
+          }}>
+            Confirmar
+          </button>
+          <button onClick={closeModal}>Cancelar</button>
+        </div>
+      )}
     </div>
   );
 }

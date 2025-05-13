@@ -27,18 +27,64 @@ export default function Register() {
     setError('')
     setSuccess('')
 
+    if (!email || !password || !nome || !cpf) {
+      setError('Todos os campos são obrigatórios.')
+      return
+    }
+
     if (password !== confirmPassword) {
       setError('As senhas não coincidem.')
       return
     }
 
-    const { error } = await supabase.auth.signUp({ email, password })
+    try {
+      // Criar usuário no auth
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            nome,
+            cpf
+          }
+        }
+      })
 
-    if (error) {
-      setError(error.message)
-    } else {
+      if (signUpError) {
+        console.error('Erro no signup:', signUpError)
+        setError(signUpError.message)
+        return
+      }
+
+      const userId = signUpData?.user?.id
+
+      if (userId) {
+        // Inserir na tabela usuarios
+        const { error: insertError } = await supabase
+          .from('usuarios')
+          .insert([
+            {
+              id: userId,
+              email,
+              nome,
+              cpf,
+              acesso: tipoUsuario,
+              vereador_id: tipoUsuario === 'Secretário' ? vereadorAssociado : null
+            }
+          ])
+
+        if (insertError) {
+          console.error('Erro ao inserir na tabela usuarios:', insertError)
+          setError(insertError.message)
+          return
+        }
+      }
+
       setSuccess('Cadastro realizado com sucesso! Faça login.')
       setTimeout(() => navigate('/login'), 2000)
+    } catch (error: any) {
+      console.error('Erro:', error)
+      setError(error.message || 'Erro ao criar usuário')
     }
   }
 

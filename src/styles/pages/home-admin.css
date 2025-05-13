@@ -147,8 +147,8 @@
   
   /* Container do mapa */
   .map-container {
-    flex-grow: 1;
-    height: calc(100vh - 110px);
+    height: 80%;
+    width: 60%;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -177,23 +177,46 @@
   
   /* Container dos setores */
   .setores-container {
-    width: 280px;
+    width: 320px;
+    min-height: 450px;    /* aumenta a altura mínima */
+    max-height: none;     /* remove limite de altura */
+    overflow-y: visible;  /* remove scroll */
     background-color: white;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    
   }
   
   .setores-container h2 {
     font-size: 18px;
     margin-bottom: 20px;
+    margin: 20px;
     color: #1f2937;
   }
   
   .setores-lista {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px; /* espaço entre blocos de listas, ajuste conforme necessário */
+    max-height: none;
+    overflow-y: visible;
+  }
+  
+  .home-setores-list {
+    list-style: none;
+    padding: 20px;
+    margin: 10px;
+    
+    
+  }
+  
+  .home-setores-list li {
+    margin-bottom: 8px; /* espaço entre cada item da lista */
+  }
+  
+  .home-setores-list li:last-child {
+    margin-bottom: 0;
   }
   
   .setor-item {
@@ -212,36 +235,7 @@
     display: inline-block;
   }
   
-  .icone-setor.saude {
-    background-color: #f0f9ff;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>');
-  }
-  
-  .icone-setor.educacao {
-    background-color: #eff6ff;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>');
-  }
-  
-  .icone-setor.obras {
-    background-color: #f9fafb;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>');
-  }
-  
-  .icone-setor.meio-ambiente {
-    background-color: #ecfdf5;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a9 9 0 0 0-9 9c0 4.17 2.75 7.7 6.54 8.85C9.5 20 9.24 20 9 20H6a2 2 0 0 0-2 2h16a2 2 0 0 0-2-2h-2.8c-.23 0-.46 0-.69-.05C18.23 18.76 21 15.22 21 11a9 9 0 0 0-9-9z"/></svg>');
-  }
-  
-  .icone-setor.comunicacao {
-    background-color: #f0fdfa;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>');
-  }
-  
-  .icone-setor.padrao {
-    background-color: #f3f4f6;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>');
-  }
-  
+
   .setor-nome {
     font-weight: 500;
     flex-grow: 1;

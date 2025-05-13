@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { supabase } from '../services/supabase';
 import logo from '../assets/images/logo.png';
-import '../styles/pages/Home.css';
+import '../styles/pages/home-admin.css';
 
 // Tipos para as ocorrências
 interface Ocorrencia {
@@ -177,6 +177,9 @@ export default function Home() {
             </li>
             <li>
               <a href="/relatorios">Relatórios</a>
+            </li>
+            <li>
+              <a href="/cadastro-setor">Cadastro de Setor</a>
             </li>
           </ul>
         </nav>

@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { supabase } from '../services/supabase';
 import logo from '../assets/images/logo.png';
-import '../styles/pages/Home.css';
+import '../styles/pages/home-admin.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeartbeat, faBook, faTools, faLeaf, faBullhorn, faCircle, faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeartbeat,
+  faBook,
+  faTools,
+  faLeaf,
+  faBullhorn,
+  faCircle,
+  faWater,
+  faShieldAlt,
+  faBus,
+  faHandsHelping,
+  faSun // <-- adicione aqui
+} from '@fortawesome/free-solid-svg-icons';
 
 // Tipos para as ocorrências
 interface Ocorrencia {
@@ -25,6 +37,7 @@ interface SetorContagem {
 export default function Home() {
   const [ocorrencias, setOcorrencias] = useState<Ocorrencia[]>([]);
   const [setoresAtivos, setSetoresAtivos] = useState<SetorContagem[]>([]);
+  const [todosSetores, setTodosSetores] = useState<string[]>([]);
   const [usuarioAtual, setUsuarioAtual] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -64,6 +77,42 @@ export default function Home() {
     
     getUsuario();
   }, [navigate]);
+
+  // Buscar todos os setores do banco
+  useEffect(() => {
+    const fetchSetores = async () => {
+      const { data, error } = await supabase
+        .from('setores')
+        .select('nome');
+      if (data) {
+        setTodosSetores(data.map((s: any) => s.nome));
+      }
+    };
+    fetchSetores();
+  }, []);
+
+  // Buscar ocorrências e montar lista de setores com contagem
+  useEffect(() => {
+    const fetchOcorrencias = async () => {
+      const { data, error } = await supabase
+        .from('ocorrencias')
+        .select('setor');
+      if (data) {
+        // Conta quantas ocorrências por setor
+        const contagem: Record<string, number> = {};
+        data.forEach((o: any) => {
+          contagem[o.setor] = (contagem[o.setor] || 0) + 1;
+        });
+        // Junta todos os setores, mesmo sem ocorrência
+        const setoresCompletos = todosSetores.map(nome => ({
+          nome,
+          contagem: contagem[nome] || 0
+        }));
+        setSetoresAtivos(setoresCompletos);
+      }
+    };
+    if (todosSetores.length > 0) fetchOcorrencias();
+  }, [todosSetores]);
 
   // Buscar ocorrências do Supabase e configurar assinatura em tempo real
   useEffect(() => {
@@ -146,13 +195,29 @@ export default function Home() {
       case 'Educação':
         return <FontAwesomeIcon icon={faBook} className="icone-setor educacao" />;
       case 'Infraestrutura':
-        return <FontAwesomeIcon icon={faTools} className="icone-setor infraestrutura" />;
+        return <FontAwesomeIcon icon={faTools} className="icone-setor obras" />;
       case 'Iluminação Pública':
-        return <FontAwesomeIcon icon={faLightbulb} className="icone-setor iluminacao-publica" />;
+        return <FontAwesomeIcon icon={faSun} className="icone-setor iluminacao-publica" />;
       case 'Meio Ambiente':
         return <FontAwesomeIcon icon={faLeaf} className="icone-setor meio-ambiente" />;
+      case 'Saúde':
+        return <FontAwesomeIcon icon={faHeartbeat} className="icone-setor saude" />;
+      case 'Comunicação':
+        return <FontAwesomeIcon icon={faBullhorn} className="icone-setor comunicacao" />;
+      case 'Saneamento':
+        return <FontAwesomeIcon icon={faWater} className="icone-setor saneamento" />;
+      case 'Defesa Cívil':
+        return <FontAwesomeIcon icon={faShieldAlt} className="icone-setor defesa-civil" />;
+      case 'Transporte':
+        return <FontAwesomeIcon icon={faBus} className="icone-setor transporte" />;
+      case 'Segurança':
+        return <FontAwesomeIcon icon={faShieldAlt} className="icone-setor seguranca" />;
+      case 'Assistência Social':
+        return <FontAwesomeIcon icon={faHandsHelping} className="icone-setor assistencia-social" />;
+      case 'Iluminação':
+        return <FontAwesomeIcon icon={faSun} className="icone-setor iluminacao" />;
       default:
-        return <FontAwesomeIcon icon={faCircle} className="icone-setor padrao" style={{ color: '#ccc' }} />;
+        return <FontAwesomeIcon icon={faCircle} className="icone-setor padrao" />;
     }
   };
 
@@ -215,19 +280,17 @@ export default function Home() {
           {/* Setores Ativos */}
           <div className="setores-container">
             <h2>Setores mais ativos</h2>
-            <div className="setores-lista">
+            <ul className="home-setores-list">
               {setoresAtivos.sort((a, b) => b.contagem - a.contagem).map((setor) => (
-                <Link
-                  key={setor.nome}
-                  to={`/setor/${setor.nome}`}
-                  className="setor-item-link"
-                >
-                  {getIconeSetor(setor.nome)}
-                  <span className="setor-nome">{setor.nome}: </span>
-                  <span className="setor-contagem">{setor.contagem}</span>
-                </Link>
+                <li className="home-setor-item" key={setor.nome}>
+                  <div className="setor-item-link" /* Removido Link, agora é apenas div */>
+                    {getIconeSetor(setor.nome)}
+                    <span className="setor-nome">{setor.nome}: </span>
+                    <span className="setor-contagem">{setor.contagem}</span>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
