@@ -179,7 +179,7 @@
   .setores-container {
     width: 320px;
     min-height: 450px;    /* aumenta a altura mínima */
-    max-height: none;     /* remove limite de altura */
+    max-height: 80%;     /* remove limite de altura */
     overflow-y: visible;  /* remove scroll */
     background-color: white;
     border-radius: 8px;

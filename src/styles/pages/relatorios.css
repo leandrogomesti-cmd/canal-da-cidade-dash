@@ -1,0 +1,190 @@
+/* Container principal */
+.reports-container {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Título da página */
+.reports-title {
+  color: #1a237e;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Estilos base dos cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 800px;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  color: #2c3e50;
+  padding: 16px 24px;
+  border-bottom: 1px solid #edf2f7;
+  font-weight: 600;
+}
+
+/* Card do Gráfico de Pizza */
+.pie-chart-card {
+  composes: card;
+}
+
+.pie-chart-container {
+  padding: 20px;
+  height: 350px;
+  width: 600px;
+  position: relative;
+}
+
+/* Card de Lista de Status */
+.status-card {
+  composes: card;
+}
+
+.status-list {
+  padding: 16px 24px;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin: 8px 0;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.status-item:hover {
+  background-color: #edf2f7;
+  transform: scale(1.01);
+}
+
+/* Card de Ocorrências por Período */
+.period-card {
+  composes: card;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px;
+  background-color: #f8fafc;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-select {
+  min-width: 150px !important;
+}
+
+.date-range-picker {
+  min-width: 300px !important;
+}
+
+.results-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 0 0 8px 8px;
+}
+
+.results-text {
+  font-size: 16px;
+  color: #2c3e50;
+  line-height: 1.8;
+}
+
+.results-number {
+  color: #1a237e;
+  font-weight: 600;
+}
+
+.occurrences-list {
+  margin-top: 24px;
+}
+
+.occurrence-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  margin: 12px 0;
+  margin-right: 70%;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.occurrence-item:hover {
+  background-color: #f8fafc;
+  transform: translateX(4px);
+}
+
+.occurrence-title {
+  font-weight: 500;
+  color: #2d3748;
+  flex: 1;
+}
+
+.occurrence-date {
+  color: #718096;
+  padding-left: 24px;
+  margin-left: 24px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.occurrence-separator {
+  color: #718096;
+  margin: 0 12px;
+}
+
+/* Grid Layout para Cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
+  gap: 32px;
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 768px) {
+  .reports-container {
+    padding: 16px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .filter-select,
+  .date-range-picker {
+    width: 100% !important;
+  }
+
+  .occurrence-item {
+    margin-right: 0;
+  }
+}
