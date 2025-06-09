@@ -1,56 +1,141 @@
-/* Updated styles for the Setores grid layout */
+/* Setores.css - Versão responsiva */
 .setores-container {
-  padding: 10px;
-  width: 30%;
-  height: 830px;
-  margin: 10px;
-  background-color: #d3d3d3;
+  padding: 20px;
+  background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  min-height: calc(100vh - 140px);
 }
 
 .setores-container h1 {
-  text-align: left;
-  font-size: 1.8rem;
-  color: #000;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  align-items: center;
-  padding-left: 10px;
+  text-align: center;
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 30px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .setores-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
 .setor-item {
-  padding: 30px;
-  padding-left: 50px;
-  padding-right: 50px;
-  background-color: #a9a9a9;
-  border-radius: 8px;
+  padding: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
   text-align: center;
   font-size: 1rem;
-  font-weight: bold;
-  color: #000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
   cursor: pointer;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
 }
 
 .setor-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Styles for sector icons */
+.setor-item:nth-child(odd) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.setor-item:nth-child(3n) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.setor-item:nth-child(4n) {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
 .icone-setor {
-  font-size: 1.5rem;
-  margin-right: 10px;
-  color: #333;
+  font-size: 2rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* TABLET - 768px a 1024px */
+@media (max-width: 1024px) {
+  .setores-container {
+    margin: 16px;
+    padding: 16px;
+  }
+  
+  .setores-list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  
+  .setor-item {
+    padding: 20px;
+    min-height: 100px;
+  }
+  
+  .icone-setor {
+    font-size: 1.8rem;
+  }
+}
+
+/* MOBILE - até 768px */
+@media (max-width: 768px) {
+  .setores-container {
+    margin: 12px;
+    padding: 16px;
+  }
+  
+  .setores-container h1 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  
+  .setores-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .setor-item {
+    padding: 16px;
+    min-height: 80px;
+    font-size: 0.9rem;
+  }
+  
+  .icone-setor {
+    font-size: 1.5rem;
+  }
+}
+
+/* MOBILE PEQUENO - até 480px */
+@media (max-width: 480px) {
+  .setores-container {
+    margin: 8px;
+    padding: 12px;
+  }
+  
+  .setores-container h1 {
+    font-size: 1.4rem;
+  }
+  
+  .setor-item {
+    padding: 14px;
+    min-height: 70px;
+    font-size: 0.85rem;
+  }
+  
+  .icone-setor {
+    font-size: 1.3rem;
+  }
 }

@@ -1,0 +1,205 @@
+/* SidebarLayout.css - Layout responsivo principal */
+.home-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Sidebar - Desktop */
+.sidebar {
+  width: 250px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e2e8f0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.logo-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  max-width: 100%;
+}
+
+/* Menu */
+.menu {
+  flex-grow: 1;
+  padding: 20px 0;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin-bottom: 8px;
+}
+
+.menu a {
+  color: #4a5568;
+  text-decoration: none;
+  display: block;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 0 16px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.menu a:hover {
+  background-color: #f7fafc;
+  color: #2d3748;
+}
+
+.menu a.active {
+  background-color: #e6fffa;
+  color: #319795;
+  border-left: 4px solid #319795;
+}
+
+/* Botão de logout */
+.logout-container {
+  padding: 20px;
+  margin-top: auto;
+}
+
+.logout-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00aeff;
+  border: 1px solid #00aeff;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #feb2b2;
+}
+
+/* Conteúdo principal */
+.main-content {
+  flex: 1;
+  margin-left: 150px;
+  min-height: 100vh;
+  background-color: #f7fafc;
+}
+
+/* Botão do menu mobile (hambúrguer) */
+.mobile-menu-button {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mobile-menu-button span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #4a5568;
+  margin: 4px 0;
+  transition: 0.3s;
+}
+
+/* Overlay para mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* TABLET - 768px a 1024px */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+  }
+  
+  .main-content {
+    margin-left: 220px;
+  }
+  
+  .logo {
+    width: 100px;
+  }
+}
+
+/* MOBILE - até 768px */
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: block;
+  }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar-overlay.show {
+    display: block;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding-top: 70px;
+  }
+  
+  .logo-container {
+    padding: 15px;
+  }
+  
+  .menu a {
+    font-size: 16px;
+    padding: 14px 20px;
+  }
+}
+
+/* MOBILE PEQUENO - até 480px */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100vw;
+  }
+  
+  .main-content {
+    padding-top: 60px;
+  }
+  
+  .mobile-menu-button {
+    top: 15px;
+    left: 15px;
+    padding: 10px;
+  }
+}
