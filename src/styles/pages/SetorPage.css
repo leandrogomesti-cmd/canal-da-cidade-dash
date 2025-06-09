@@ -1,5 +1,7 @@
 .setor-page-container {
-  padding: 20px;
+  margin-top: 50px;
+  margin-left: 150px;
+  margin-right: 50px;
   background-color: #f9fafb;
   min-height: 100vh;
 }

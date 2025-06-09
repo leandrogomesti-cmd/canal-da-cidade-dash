@@ -4,7 +4,9 @@
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  margin-top: 10px;
+  margin-left: 150px;
+  margin-right: 50px;
   min-height: calc(100vh - 140px);
 }
 
