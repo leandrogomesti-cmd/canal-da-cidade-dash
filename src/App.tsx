@@ -11,6 +11,7 @@ import SidebarLayout from './layouts/SidebarLayout';
 import SetorPage from './pages/SetorPage';
 import CadastroSetor from './pages/cadastro-setor';
 import { AuthProvider } from './contexts/AuthContext';
+import MesaOcorrencias from './pages/mesa-ocorrencias';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -24,7 +25,6 @@ function App() {
           <Route path="/home-admin" element={<HomeAdmin />} />
           <Route path="/login" element={<Login />} />
 
-
           <Route element={<SidebarLayout />}>
             <Route path="/home" element={<Home />} />
             <Route path="/setores" element={<Setores />} />
@@ -32,6 +32,7 @@ function App() {
             <Route path="/relatorios" element={<Relatorios />} />
             <Route path="/setor/:id" element={<SetorPage />} />
             <Route path="/cadastro-setor" element={<CadastroSetor />} />
+            <Route path="/mesa-ocorrencias" element={<MesaOcorrencias />} />
           </Route>
         </Routes>
       </Router>

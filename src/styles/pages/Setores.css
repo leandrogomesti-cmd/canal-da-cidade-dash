@@ -67,7 +67,7 @@
 
 .icone-setor {
   font-size: 2rem;
-  margin-bottom: 8px;
+  margin-bottom: 8px;  
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
@@ -90,6 +90,7 @@
   
   .icone-setor {
     font-size: 1.8rem;
+    
   }
 }
 

@@ -58,6 +58,7 @@ export default function SidebarLayout() {
           <ul>
             <li><a href="/home" onClick={closeMobileMenu}>Visão Geral</a></li>
             <li><a href="/setores" onClick={closeMobileMenu}>Ocorrências por Setores</a></li>
+            <li><a href="/mesa-ocorrencias" onClick={closeMobileMenu}>Mesa de Ocorrências</a></li>
             <li><a href="/relatorios" onClick={closeMobileMenu}>Relatórios</a></li>
           </ul>
         </nav>

@@ -1,0 +1,107 @@
+.mesa-ocorrencias-container {
+  max-width: 800px;
+  margin: 40px auto 0 auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+.mesa-ocorrencias-container h1 {
+  font-size: 2rem;
+  margin-bottom: 32px;
+  color: #1e293b;
+  text-align: center;
+}
+
+.mesa-ocorrencias-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mesa-card {
+  background: #f8fafc;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-left: 6px solid #06b6d4;
+  transition: box-shadow 0.2s;
+}
+.mesa-card:hover {
+  box-shadow: 0 4px 16px rgba(6,182,212,0.10);
+}
+
+.mesa-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.mesa-card-titulo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+.mesa-card-status {
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 16px;
+  background: #e0f2fe;
+  color: #0284c7;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+}
+.mesa-status-mesa {
+  background: #fef9c3;
+  color: #b45309;
+}
+.mesa-status-recebida {
+  background: #bbf7d0;
+  color: #15803d;
+}
+.mesa-card-descricao {
+  color: #334155;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+.mesa-card-btn {
+  align-self: flex-end;
+  background: #06b6d4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+.mesa-card-btn:hover {
+  background: #0891b2;
+}
+.mesa-sem-ocorrencias {
+  text-align: center;
+  color: #64748b;
+  font-size: 1.1rem;
+  margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+  .mesa-ocorrencias-container {
+    padding: 8px;
+  }
+  .mesa-card {
+    padding: 12px 8px;
+  }
+  .mesa-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+} 
