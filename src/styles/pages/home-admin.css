@@ -282,3 +282,46 @@ body {
     padding: 3px 6px;
   }
 }
+
+@media (max-width: 1200px) {
+  .content-area {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+  .map-container {
+    min-height: 250px;
+    max-height: 350px;
+  }
+  .setores-container {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .content-area {
+    padding: 8px;
+    gap: 8px;
+  }
+  .setores-container {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    height: 48px;
+    padding: 0 8px;
+  }
+  .content-area {
+    padding: 4px;
+    gap: 4px;
+  }
+  .setores-container {
+    padding: 4px;
+  }
+  .map-container {
+    min-height: 180px;
+    max-height: 220px;
+  }
+}

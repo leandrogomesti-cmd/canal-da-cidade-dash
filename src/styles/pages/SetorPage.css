@@ -92,3 +92,39 @@ button:hover {
   color: #111827;
   font-weight: 600;
 }
+
+@media (max-width: 1200px) {
+  .setor-page-container {
+    margin-left: 40px;
+    margin-right: 10px;
+    padding: 8px;
+  }
+  .trello-board {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  .setor-page-container {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 4px;
+  }
+  .trello-board {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .setor-page-container {
+    margin-top: 10px;
+    padding: 2px;
+  }
+  .trello-column {
+    padding: 4px;
+  }
+  .trello-card {
+    padding: 4px;
+  }
+}

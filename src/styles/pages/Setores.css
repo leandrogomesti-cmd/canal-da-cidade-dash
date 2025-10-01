@@ -143,3 +143,36 @@
     font-size: 1.3rem;
   }
 }
+
+@media (max-width: 1200px) {
+  .setores-container {
+    margin: 8px;
+    padding: 12px;
+  }
+  .setores-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .setores-container {
+    margin: 4px;
+    padding: 8px;
+  }
+  .setores-list {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .setores-container {
+    padding: 2px;
+  }
+  .setor-item {
+    padding: 8px;
+    min-height: 50px;
+    font-size: 0.8rem;
+  }
+}

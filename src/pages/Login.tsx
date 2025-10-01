@@ -79,7 +79,7 @@ export default function Login() {
 
       <div className="logo-container">
         <img src={logo} alt="Canal da Cidade Logo" className="logo" />
-        <img src={zlogo} alt="Zion Logo" className="zlogo" />
+        
       </div>
 
       <footer className="login-footer">

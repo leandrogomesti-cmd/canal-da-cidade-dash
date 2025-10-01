@@ -108,3 +108,26 @@
   color: #4a5568;
   text-align: center;
 }
+
+@media (max-width: 900px) {
+  .login-container {
+    padding: 8px;
+  }
+  .login-form-container {
+    max-width: 98vw;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-container {
+    padding: 2px;
+  }
+  .login-form-container {
+    max-width: 100vw;
+    padding: 0.5rem;
+  }
+  .logo {
+    width: 120px;
+  }
+}

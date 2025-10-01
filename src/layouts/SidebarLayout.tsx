@@ -33,6 +33,14 @@ export default function SidebarLayout() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add('menu-aberto');
+    } else {
+      document.body.classList.remove('menu-aberto');
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <div className="home-container">
       {/* Botão do menu mobile */}
@@ -44,7 +52,7 @@ export default function SidebarLayout() {
 
       {/* Overlay do mobile */}
       <div 
-        className={`sidebar-overlay ${isMobileMenuOpen ? 'show' : ''}`}
+        className={`sidebar-overlay${isMobileMenuOpen ? ' show' : ''}`}
         onClick={closeMobileMenu}
       ></div>
 
