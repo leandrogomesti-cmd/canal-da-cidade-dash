@@ -29,7 +29,7 @@ export default function Home() {
   // Configuração do Google Maps
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyDW_3j6lM0fBH_LbEDy754BZoAFdjoQLEE' // Substitua pela sua chave API do Google Maps
+    googleMapsApiKey: 'AIzaSyAxdtH8_6JIxkqkxHmGkrYkAbZgELa1vCw' // Substitua pela sua chave API do Google Maps
   });
 
   const mapContainerStyle = {
